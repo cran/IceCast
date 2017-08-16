@@ -84,7 +84,7 @@ getArea <- function(myPoly, byid = FALSE) {
 #' @param e2 eccentricity squared (defaults to 0.006693883)
 #' @param degrees boolean indicating whether result should be returned in degrees or radians
 #' @return list with elements \code{coords$aLat}, the geodetic latitude (degrees, +90 to -90), and \code{coords$aLon}, the
-#' geodetic longitude (degrees, 0 to 360)
+#' geodetic longitude (degrees, -180 to 180)
 #' @references The equations for this calculation are from Snyder, J. P., 1982,  Map Projections Used by the U.S.
 #' Geological Survey, Geological Survey Bulletin 1532, U.S. Government
 #' Printing Office.  See JPL Technical Memorandum 3349-85-101 for further

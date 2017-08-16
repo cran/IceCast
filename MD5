@@ -1,7 +1,7 @@
-8f41d3c9ce8cdd3f193b69afe3435862 *DESCRIPTION
+27fa96431c3e3c5b42ee3db6f7c3e1ff *DESCRIPTION
 88da5ec2d1356a6c7186e79d3687b14c *NAMESPACE
 ac9ebf565fc1079101b5e18a0ef7ffa8 *R/biasCorrect.R
-38f71638f2988d9fd823d19ab850d1d3 *R/geodesicAreas.R
+507027890e458f490f5fa7835765793a *R/geodesicAreas.R
 3fa74e9a316cf078f7804977c396983b *R/importExport.R
 2c9490f70ba3317af93ca7fa83cbeb84 *R/mappings.R
 de760c8ef22764d141d7140a1ecaea52 *R/misc.R
@@ -28,9 +28,9 @@ f3e4ca9dca731e4ec69f8de44ec185c3 *data/obsLEx.RData
 0b9383eda81a601f6ef100cb74c6ccf0 *data/regionInfo.RData
 ea6fa603ffa51aea6ae534694871b3c4 *data/sampleMappedPoints_region1.RData
 e4c0a12c0792c66838c4f169229ef583 *data/spatialCollEx.RData
-197b3b9ae012181bf25f418f6f8499a3 *inst/doc/biasCorrectDemo.R
-d69fe5478e0c1c77d70d7bc653bacaed *inst/doc/biasCorrectDemo.Rmd
-8dfeded229375d57da5c8095aad2cfb4 *inst/doc/biasCorrectDemo.html
+2a8a9d87feca1d2e30c4bb4ca72fa4b5 *inst/doc/biasCorrectDemo.R
+3fb12a43ca00341b8a3d3f791d727307 *inst/doc/biasCorrectDemo.Rmd
+edbdaf07f7944e765d59c553a7d861d3 *inst/doc/biasCorrectDemo.html
 d785edcf6ac0ca273a23a83a8f5af9a9 *man/allRegions.Rd
 980eb3ce03936d8f4d91b1e8ee312b36 *man/anyIntersect.Rd
 5c856f7fd8e525d874be3be7797f3594 *man/bgWater.Rd
@@ -59,7 +59,7 @@ f833b3993ed3aef50a0fc6beb44ce5a4 *man/land.Rd
 46a5776bdb8bc4bc87d696f80ff76855 *man/landMat.Rd
 684332487d020984145c4ca2011637ae *man/makePolygons.Rd
 eeda4dcb4a40a4d0993ba5a31e61d5df *man/mappedPoints.Rd
-798fd14e981970db61517e325e9ed4e7 *man/mapxy.Rd
+37670067c011371ca8172359b5f919e1 *man/mapxy.Rd
 b34fb4a57fdf1ceec043fbc52aec428f *man/obsFeb19811982.Rd
 9aa072c0078dc658af2d034d1d0c6f38 *man/obsFeb2012.Rd
 7c2d039d3ee46c929ea3834b0f0508c2 *man/obsLEx.Rd
@@ -72,4 +72,4 @@ fca58ddfcb5ab76f9542e86d0f640dd4 *man/readMonthlyBS.Rd
 bbff727d974c3625065f304b20eb9ee7 *man/spatialCollEx.Rd
 41ddea84490b14af76e2ce0347106e9c *man/untwist.Rd
 a28acf8ee190ba9c23ce82f36930fbea *man/untwistSec.Rd
-d69fe5478e0c1c77d70d7bc653bacaed *vignettes/biasCorrectDemo.Rmd
+3fb12a43ca00341b8a3d3f791d727307 *vignettes/biasCorrectDemo.Rmd

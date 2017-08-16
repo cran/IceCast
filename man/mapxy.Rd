@@ -24,7 +24,7 @@ mapxy(X, Y, sgn = 1, slat = 70, re = 6378.273, e2 = 0.006693883,
 }
 \value{
 list with elements \code{coords$aLat}, the geodetic latitude (degrees, +90 to -90), and \code{coords$aLon}, the
-geodetic longitude (degrees, 0 to 360)
+geodetic longitude (degrees, -180 to 180)
 }
 \description{
 Get corresponding latitude and longitude values for coordinates on a Polar Stereographic North projection grid

@@ -87,10 +87,12 @@ obs <- getRegion(dat = obsFeb19811982[length(1981:1982), ,], datType = "bootstra
 obsMap <- getMap(ice = obs, plotting = TRUE, main = "Observed Mapping \n February 1982")
 
 ## ---- createMapping Feb example, fig.align = "center", fig.width = 8, fig.height = 8----
-par(mfrow = c(2, 2), oma = rep(0, 4), mar = rep(1, 4))
-discrepDemo1 <- createMapping(startYear = 1981, endYear = 1981, obsStartYear = 1981, predStartYear = 1980,
-                              observed = obsFeb19811982, predicted = emFeb19811982, regions = regionInfo, 
-                              month = 2, level = 15, datTypeObs = "bootstrap", datTypePred = "gfdl", plotting = TRUE)
+par(mfrow = c(2, 2), oma = rep(0, 4), mar = c(1, 1, 2, 1))
+discrepDemo1 <- createMapping(startYear = 1981, endYear = 1981, 
+                              obsStartYear = 1981, predStartYear = 1980,
+                              observed = obsFeb19811982, predicted = emFeb19811982, 
+                              regions = regionInfo,  month = 2, level = 15, 
+                              datTypeObs = "bootstrap", datTypePred = "gfdl", plotting = TRUE)
 
 ## ----look at a mapped list, fig.height = 4, fig.width = 4----------------
 head(discrepDemo1$predList[[1]][1,,])
@@ -100,14 +102,16 @@ rm(discrepDemo1)
 
 ## ----finding all maps, eval = FALSE--------------------------------------
 #  ##Not run##
-#  discrep <- createMapping(startYear = 1981, endYear = 2011, obsStartYear = 1981, predStartYear = 1980,
-#                           observed = observed[,month,,], predicted = ensemMean[,month,,],
+#  discrep <- createMapping(startYear = 1981, endYear = 2011,
+#                           obsStartYear = 1981, predStartYear = 1980,
+#                           observed = observed[,month,,],predicted = ensemMean[,month,,],
 #                           regions = regionInfo, month = month, level = 15,
 #                           datTypeObs = "bootstrap", datTypePred = "gfdl")
 
 ## ----bias correct month--------------------------------------------------
-adj <- contourShift(maps = discrep, predicted = emFeb2012, bcYear = 2012, predStartYear = 2012, regions = 
-                    regionInfo,  level = 15, datTypePred = "gfdl")
+adj <- contourShift(maps = discrep, predicted = emFeb2012, bcYear = 2012, 
+                    predStartYear = 2012, regions = regionInfo,  
+                    level = 15, datTypePred = "gfdl")
 
 ## ----get obs and raw-----------------------------------------------------
 obs <- getRegion(dat = obsFeb2012, datType = 'bootstrap', level = 15)
