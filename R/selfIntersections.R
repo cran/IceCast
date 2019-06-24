@@ -8,17 +8,17 @@
 #' @return boolean indicating if there is an intersection
 #' @export
 #' @examples
-#'  checkIntersect(c(0, 0), c(1, 1), c(2, 2), c(3, 3))
-#'  checkIntersect(c(0, 0), c(1, 1), c(0.5, 0.5), c(2, 2))
-checkIntersect <- function(a, b, c, d, seq = FALSE) {
+#'  check_intersect(c(0, 0), c(1, 1), c(2, 2), c(3, 3))
+#'  check_intersect(c(0, 0), c(1, 1), c(0.5, 0.5), c(2, 2))
+check_intersect <- function(a, b, c, d, seq = FALSE) {
   ##typical lines refers to lines that are not horizontal or vertical
 
   ##inequality functions that correctly account for floating point issues.
   ##(Care with equality of floating points is needed througout. This is why all.equal is used)
-  lessEq <- function(a, b) {
+  less_eq <- function(a, b) {
     ((a < b) || isTRUE(all.equal(as.numeric(a), as.numeric(b))))
   }
-  greaterEq <- function(a, b) {
+  greater_eq <- function(a, b) {
     ((a > b) || isTRUE(all.equal(as.numeric(a), as.numeric(b))))
   }
 
@@ -26,36 +26,40 @@ checkIntersect <- function(a, b, c, d, seq = FALSE) {
   if (isTRUE(all.equal(a, c)) & isTRUE(all.equal(b, d))) {
     return(TRUE)
 
-  ##two vertical lines
+    ##two vertical lines
   } else if (isTRUE(all.equal(a[1], b[1])) & isTRUE(all.equal(c[1], d[1]))) {
     if (!isTRUE(all.equal(a[1], c[1]))) { #check if the two lines are not on the same x-coord
       return(FALSE)
       #if on same x-coord; y-coords need to overlap
-    } else if ((max(a[2], b[2]) < min(c[2], d[2])) || (max(c[2], d[2]) < min(a[2], b[2]))) {
+    } else if ((max(a[2], b[2]) < min(c[2], d[2])) ||
+               (max(c[2], d[2]) < min(a[2], b[2]))) {
       return(FALSE) #if sequential equality means not an overlap
-    } else if ((lessEq(max(a[2], b[2]), min(c[2], d[2])) || lessEq(max(c[2], d[2]), min(a[2], b[2]))) & seq == TRUE) {
+    } else if ((less_eq(max(a[2], b[2]), min(c[2], d[2])) ||
+                less_eq(max(c[2], d[2]), min(a[2], b[2]))) & seq == TRUE) {
       return(FALSE)
     } else {
       return(TRUE)
     }
 
-  ##two horizontal lines
+    ##two horizontal lines
   } else if (isTRUE(all.equal(a[2], b[2])) & isTRUE(all.equal(c[2], d[2]))) {
     if (!(isTRUE(all.equal(a[2], c[2])))) { #check if the two lines are on the same y-coord
       return(FALSE)
       #if on same y-coord; x-coords need to overlap
-    } else if ((max(a[1], b[1]) < min(c[1], d[1])) || (max(c[1], d[1]) < min(a[1], b[1]))) {
+    } else if ((max(a[1], b[1]) < min(c[1], d[1])) ||
+               (max(c[1], d[1]) < min(a[1], b[1]))) {
       return(FALSE) #if sequential equality means not an overlap
-    } else if ((lessEq(max(a[1], b[1]), min(c[1], d[1])) || lessEq(max(c[1], d[1]), min(a[1], b[1]))) & seq == TRUE) {
+    } else if ((less_eq(max(a[1], b[1]), min(c[1], d[1])) ||
+                less_eq(max(c[1], d[1]), min(a[1], b[1]))) & seq == TRUE) {
       return(FALSE)
     } else {
       return(TRUE)
     }
 
- ##first line horizontal, second line vertical
+    ##first line horizontal, second line vertical
   } else if (isTRUE(all.equal(a[2], b[2])) & isTRUE(all.equal(c[1], d[1]))) {
-    if (greaterEq(c[1], min(a[1], b[1])) & lessEq(c[1], max(a[1], b[1])) &
-        greaterEq(a[2], min(c[2], d[2])) & lessEq(a[2], max(c[2], d[2]))) {
+    if (greater_eq(c[1], min(a[1], b[1])) & less_eq(c[1], max(a[1], b[1])) &
+        greater_eq(a[2], min(c[2], d[2])) & less_eq(a[2], max(c[2], d[2]))) {
       inter <- c(c[1], a[2])
       if (seq & isTRUE(all.equal(inter, b))) { #okay if line intersects only at end points for sequential coords
         return(FALSE)
@@ -66,10 +70,10 @@ checkIntersect <- function(a, b, c, d, seq = FALSE) {
       return(FALSE)
     }
 
-  ##first line vertical, second line horizontal
+    ##first line vertical, second line horizontal
   } else if (isTRUE(all.equal(c[2], d[2])) & isTRUE(all.equal(a[1], b[1]))) {
-    if (greaterEq(a[1], min(c[1], d[1])) & lessEq(a[1], max(c[1], d[1])) &
-        greaterEq(c[2], min(a[2], b[2])) & lessEq(c[2], max(a[2], b[2]))) {
+    if (greater_eq(a[1], min(c[1], d[1])) & less_eq(a[1], max(c[1], d[1])) &
+        greater_eq(c[2], min(a[2], b[2])) & less_eq(c[2], max(a[2], b[2]))) {
       inter <- c(a[1], c[2])
       if (seq & isTRUE(all.equal(inter, d))) { #okay if line intersects only at end points for sequential coords
         return(FALSE)
@@ -80,7 +84,7 @@ checkIntersect <- function(a, b, c, d, seq = FALSE) {
       return(FALSE)
     }
 
-  ##first line horizontal, second typical
+    ##first line horizontal, second typical
   } else if (isTRUE(all.equal(a[2], b[2]))) {
     #find typical line
     m2 <- (d[2] - c[2])/(d[1] - c[1])
@@ -89,10 +93,10 @@ checkIntersect <- function(a, b, c, d, seq = FALSE) {
     xi <- (a[2] - b2)/m2
     yi <- m2*xi + b2
     #check if intersect point is in region; if so, return intersect point
-    if (!(lessEq(xi, max(a[1], b[1])) & greaterEq(xi, min(a[1], b[1])) &
-          lessEq(yi, max(a[2], b[2])) & greaterEq(yi, min(a[2], b[2])) &
-          lessEq(xi, max(c[1], d[1])) & greaterEq(xi, min(c[1], d[1])) &
-          lessEq(yi, max(c[2], d[2])) & greaterEq(yi, min(c[2], d[2])))) {
+    if (!(less_eq(xi, max(a[1], b[1])) & greater_eq(xi, min(a[1], b[1])) &
+          less_eq(yi, max(a[2], b[2])) & greater_eq(yi, min(a[2], b[2])) &
+          less_eq(xi, max(c[1], d[1])) & greater_eq(xi, min(c[1], d[1])) &
+          less_eq(yi, max(c[2], d[2])) & greater_eq(yi, min(c[2], d[2])))) {
       return(FALSE)
     } else {
       inter <- c(xi, yi)
@@ -103,7 +107,7 @@ checkIntersect <- function(a, b, c, d, seq = FALSE) {
       }
     }
 
-  ##first line typical, second horizontal
+    ##first line typical, second horizontal
   } else if (isTRUE(all.equal(c[2], d[2]))) {
     #find typical line
     m2 <- (b[2] - a[2])/(b[1] - a[1])
@@ -112,10 +116,10 @@ checkIntersect <- function(a, b, c, d, seq = FALSE) {
     xi <- (c[2] - b2)/m2
     yi <- m2*xi + b2
     #check if intersect point is in region; if so, return intersect point
-    if (!(lessEq(xi, max(c[1], d[1])) & greaterEq(xi, min(c[1], d[1])) &
-          lessEq(yi, max(c[2], d[2])) & greaterEq(yi, min(c[2], d[2])) &
-          lessEq(xi, max(a[1], b[1])) & greaterEq(xi, min(a[1], b[1])) &
-          lessEq(yi, max(a[2], b[2])) & greaterEq(yi, min(a[2], b[2])))) {
+    if (!(less_eq(xi, max(c[1], d[1])) & greater_eq(xi, min(c[1], d[1])) &
+          less_eq(yi, max(c[2], d[2])) & greater_eq(yi, min(c[2], d[2])) &
+          less_eq(xi, max(a[1], b[1])) & greater_eq(xi, min(a[1], b[1])) &
+          less_eq(yi, max(a[2], b[2])) & greater_eq(yi, min(a[2], b[2])))) {
       return(FALSE)
     } else {
       inter <- c(xi, yi)
@@ -126,7 +130,7 @@ checkIntersect <- function(a, b, c, d, seq = FALSE) {
       }
     }
 
- ##first line typical, second vertical
+    ##first line typical, second vertical
   } else if (isTRUE(all.equal(c[1], d[1]))) {
     #find other line
     m1 <- (b[2] - a[2])/(b[1] - a[1])
@@ -134,8 +138,8 @@ checkIntersect <- function(a, b, c, d, seq = FALSE) {
     #find possible intersection (yi = m1*xc + b1)
     yi <- m1*c[1] + b1
     #check if intersect point is in region; if so, return intersect point
-    if (!(lessEq(yi, max(a[2], b[2])) & greaterEq(yi, min(a[2], b[2])) &
-          lessEq(yi, max(c[2], d[2])) & greaterEq(yi, min(c[2], d[2])))) {
+    if (!(less_eq(yi, max(a[2], b[2])) & greater_eq(yi, min(a[2], b[2])) &
+          less_eq(yi, max(c[2], d[2])) & greater_eq(yi, min(c[2], d[2])))) {
       return(FALSE)
     } else {
       inter <- c(c[1], yi)
@@ -146,7 +150,7 @@ checkIntersect <- function(a, b, c, d, seq = FALSE) {
       }
     }
 
-  ##first line vertical, second line typical
+    ##first line vertical, second line typical
   } else if (isTRUE(all.equal(a[1], b[1]))) {
     #find other line
     m2 <- (d[2] - c[2])/(d[1] - c[1])
@@ -154,8 +158,8 @@ checkIntersect <- function(a, b, c, d, seq = FALSE) {
     #find possible intersection (yi = m2*xa + b2)
     yi <- m2*a[1] + b2
     #check if intersect point is in region; if so, return intersect point
-    if (!(lessEq(yi, max(a[2], b[2])) & greaterEq(yi, min(a[2], b[2])) &
-          lessEq(yi, max(c[2], d[2])) & greaterEq(yi, min(c[2], d[2])))) {
+    if (!(less_eq(yi, max(a[2], b[2])) & greater_eq(yi, min(a[2], b[2])) &
+          less_eq(yi, max(c[2], d[2])) & greater_eq(yi, min(c[2], d[2])))) {
       return(FALSE)
     } else {
       inter <- c(a[1], yi)
@@ -166,7 +170,7 @@ checkIntersect <- function(a, b, c, d, seq = FALSE) {
       }
     }
 
-  ##two typical lines
+    ##two typical lines
   } else {
     #find eq's of both lines
     m1 <- (b[2] - a[2])/(b[1] - a[1])
@@ -178,7 +182,7 @@ checkIntersect <- function(a, b, c, d, seq = FALSE) {
     if (isTRUE(all.equal(m1, m2)) & isTRUE(all.equal(b1, b2))) {
       #points overlap when min(a, b) > max(c, d) or vice versa
       #It's sufficient to test x or y coords only, since coords are only the same line
-      if (!((greaterEq(min(a[2], b[2]), max(c[2], d[2])) || greaterEq(min(c[2], d[2]), max(a[2], b[2]))))) {
+      if (!((greater_eq(min(a[2], b[2]), max(c[2], d[2])) || greater_eq(min(c[2], d[2]), max(a[2], b[2]))))) {
         return(TRUE)
       } else if (isTRUE(all.equal(b, c)) & seq == FALSE) {
         return(TRUE)
@@ -190,8 +194,8 @@ checkIntersect <- function(a, b, c, d, seq = FALSE) {
       #find possible point of intersection (Yi = m1*xi + b1 & Yi = m2*xi + b2, solve for xi)
       xi <- (b2 - b1)/(m1 - m2)
       #check if possible intersect point is in region; if so, return intersect point
-      if (!((lessEq(xi, max(a[1], b[1])) & greaterEq(xi, min(a[1], b[1]))) &
-            (lessEq(xi, max(c[1], d[1])) & greaterEq(xi, min(c[1], d[1]))))) {
+      if (!((less_eq(xi, max(a[1], b[1])) & greater_eq(xi, min(a[1], b[1]))) &
+            (less_eq(xi, max(c[1], d[1])) & greater_eq(xi, min(c[1], d[1]))))) {
         return(FALSE)
       } else {
         inter <- c(xi, m1*xi + b1)
@@ -211,27 +215,26 @@ checkIntersect <- function(a, b, c, d, seq = FALSE) {
 #' @return list where \code{list$any} is a boolean indicating if there are any intersections
 #' and \code{list$val} is an index corresponding to the first intersection found
 #' @importFrom utils combn
-#' @export
 #' @examples
-#' checkResults <- anyIntersect(currSecEx)
-#' checkResults$any #true/false
-#' checkResults$val #indices of first intersection found
-anyIntersect <- function(line) {
+#' check_results <- any_intersect(currSecEx)
+#' check_results$any #true/false
+#' check_results$val #indices of first intersection found
+any_intersect <- function(line) {
   ##line segments are referred to by the index of their first point
-  nPoints <- nrow(line)
+  n_points <- nrow(line)
 
   ##only two points, no way to have an intersection
-  if(nPoints == 2) {
+  if(n_points == 2) {
     return(list("any" = FALSE, "val" = NA))
   }
 
   ##check all pairs of line segments for intersections
-  pairs <- combn(1:(nPoints - 1), 2) #indices of all the combinations of ways pairs could be lined up
+  pairs <- combn(1:(n_points - 1), 2) #indices of all the combinations of ways pairs could be lined up
   for (i in 1:ncol(pairs)) { #loop through line seqment pairs, stop if an intersection is found
-    currPair <- pairs[,i]
-    seq <- ((currPair[2] - currPair[1]) == 1) #boolean to indicate if points are sequential (meaning they should have an intersection)
-    if (checkIntersect(a = line[currPair[1], ], b = line[currPair[1] + 1,],
-                       c = line[currPair[2],], d = line[currPair[2] + 1,], seq)) {
+    curr_pair <- pairs[,i]
+    seq <- ((curr_pair[2] - curr_pair[1]) == 1) #boolean to indicate if points are sequential (meaning they should have an intersection)
+    if (check_intersect(a = line[curr_pair[1], ], b = line[curr_pair[1] + 1,],
+                       c = line[curr_pair[2],], d = line[curr_pair[2] + 1,], seq)) {
       #return indices of which line segments are the source of the intersection
       return(list("any" = TRUE, "val" = pairs[, i]))
     }
@@ -244,9 +247,10 @@ anyIntersect <- function(line) {
 
 #' Function to remove all self-intersections from a contour.
 #' @title Remove self-intersections
-#' @param myPoly \code{SpatialPolygons} object from which self-intersections need to be removed
+#' @param my_poly \code{SpatialPolygons} object from which self-intersections need to be removed
 #' @param plotting boolean indicating if results should be plotted
-#' @param polyName name for \code{SpatialPolygons} object to return (defaults to "unspecified")
+#' @param poly_name name for \code{SpatialPolygons} object to return (defaults to "unspecified")
+#' @param min_area minimum area for any individual polygon
 #' @return \code{SpatialPolygons} object with self-intersections removed
 #' @importFrom rgeos gIsValid
 #' @importFrom sp Polygon
@@ -255,15 +259,23 @@ anyIntersect <- function(line) {
 #' \dontrun{
 #' par(mfrow = c(1, 2))
 #' plot(interEx, main = "Original Contour")
-#' noInter <- untwist(interEx, polyName = "interEx")
+#' noInter <- untwist(interEx, poly_name = "interEx")
 #' plot(noInter, main = "Final Contour")
 #' }
-untwist <- function(myPoly, plotting = FALSE, polyName = "unspecified") {
+untwist <- function(my_poly, plotting = FALSE, poly_name = "unspecified",
+                    min_area = 12.5) {
+  if (is.null(my_poly)) {
+    return(NULL)
+  }
 
-  while (suppressWarnings(!gIsValid(myPoly))) {
+  if (get_area(my_poly) < min_area) {
+    return(NULL)
+  }
+
+  while (suppressWarnings(!gIsValid(my_poly))) {
 
     ##pull out coordinates
-    coords <- myPoly@polygons[[1]]@Polygons[[1]]@coords
+    coords <- my_poly@polygons[[1]]@Polygons[[1]]@coords
     coords <- matrix(as.numeric(coords), ncol = 2)
 
     ##return NULL if you start with just a horizontal or vertinal line
@@ -272,17 +284,21 @@ untwist <- function(myPoly, plotting = FALSE, polyName = "unspecified") {
     }
 
     ##find point at or near self intersection point
-    prob <- suppressWarnings(gIsValid(myPoly, reason = T))
+    prob <- suppressWarnings(gIsValid(my_poly, reason = T))
+    temp <- strsplit(prob, " ")
+    if (length(temp[[1]]) == 3) { #special cases with more text (e.g. "ring)
+      prob <- temp[[1]][2:3]
+    }
     prob <- as.numeric(unlist(strsplit(gsub("Self-intersection\\[|\\]", "", prob), " ")))
     prob <- prob[!is.na(prob)]
 
     ##find minimal region around intersection
-    doesIntersect <- FALSE
-    nNeigh <- 5
-    currSec <- c()
-    while (!doesIntersect) {
+    does_intersect <- FALSE
+    n_neigh <- 5
+    curr_sec <- c()
+    while (!does_intersect) {
       index <- order(apply(coords, 1, function(x){  sqrt((x[1] - prob[1])^2 + (x[2] - prob[2])^2)}),
-                     decreasing = FALSE)[1:nNeigh]
+                     decreasing = FALSE)[1:n_neigh]
       index <- index[!is.na(index)] #remove NA's, which are put in place if more neightbors requested than points
       if (((nrow(coords) - max(index)) + min(index) <= max(index) - min(index)) & #Check if looping around end (BUT not needing all points)
           ((max(index) - min(index) + 1) !=  nrow(coords))) {
@@ -291,8 +307,8 @@ untwist <- function(myPoly, plotting = FALSE, polyName = "unspecified") {
       } else { #standard case (no looping)
         curr <- min(index):max(index)
       }
-      currSec <- coords[curr,]
-      temp <- anyIntersect(currSec)
+      curr_sec <- coords[curr,]
+      temp <- any_intersect(curr_sec)
       if (temp$any) {
 
         ##if we've found the intersection, keep the minimal number of line segments
@@ -317,17 +333,17 @@ untwist <- function(myPoly, plotting = FALSE, polyName = "unspecified") {
         } else { #standard case (no looping)
           curr <- min(ep):max(ep)
         }
-        currSec <- coords[curr, ]
-        stopifnot(anyIntersect(currSec)$any) #you should always have an intersection at this point
-        doesIntersect <- TRUE
+        curr_sec <- coords[curr, ]
+        stopifnot(any_intersect(curr_sec)$any) #you should always have an intersection at this point
+        does_intersect <- TRUE
       } else { #otherwise expand the region
-        nNeigh <- nNeigh + 5
-        if (nNeigh > nrow(coords)) {
-          nNeigh <- nrow(coords)
+        n_neigh <- n_neigh + 5
+        if (n_neigh > nrow(coords)) {
+          n_neigh <- nrow(coords)
         }
       }
     }
-    new <- untwistSec(currSec)
+    new <- untwist_sec(curr_sec)
     if (curr[1] > curr[length(curr)]) {
       #remove section being adjusted and put new points on the end
       cat <-  ((nrow(coords) - curr) <= curr) #categorize each point as closer to the end of the contour or the beginning
@@ -346,17 +362,23 @@ untwist <- function(myPoly, plotting = FALSE, polyName = "unspecified") {
     }
 
     #If all the algorithm, leads to is a single set of two connected points, assume no polygon
-    if (nrow(unique(round(coords, 2))) <= 2) {
+    if (nrow(unique(round(coords, 2))) <= 3) {
       return(NULL)
     }
 
     ##make new myPoly and start over
-    myPoly <- SpatialPolygons(list(
-      Polygons(list(Polygon(coords)), ID = polyName))
+    my_poly <- SpatialPolygons(list(
+      Polygons(list(Polygon(coords)), ID = poly_name))
     )
   }
 
-  return(myPoly)
+  if (!is.null(my_poly)) {
+    if (get_area(my_poly) < min_area) {
+      return(NULL)
+    }
+  }
+
+  return(my_poly)
 }
 
 #' Function to correct self-intersections in a section of a line.
@@ -371,12 +393,12 @@ untwist <- function(myPoly, plotting = FALSE, polyName = "unspecified") {
 #' @examples
 #' par(mfrow = c(1, 2))
 #' plot(currSecEx, type = "l", main = "Original Line Section", xlab = "", ylab = "")
-#' newSec <- untwistSec(currSecEx)
-#' plot(newSec, type = "l", main = "New Line Section", xlab = "", ylab =  "")
-untwistSec <- function(line, tol = 0, eps = .25) {
+#' new_sec <- untwist_sec(currSecEx)
+#' plot(new_sec, type = "l", main = "New Line Section", xlab = "", ylab =  "")
+untwist_sec <- function(line, tol = 0, eps = .25) {
 
   l <- SpatialLines(list(Lines(Line(line), ID = "temp")))
-  while (anyIntersect(line)$any) {
+  while (any_intersect(line)$any) {
     tol <- tol + eps
     l <- gSimplify(l, tol)
     line <- l@lines[[1]]@Lines[[1]]@coords

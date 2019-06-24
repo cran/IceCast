@@ -9,8 +9,8 @@
 spatialCollEx
 }
 \description{
-Example of a \code{SpatialCollections} object that contains a \code{SpatialPolygons} object and
-\code{SpatialLines} object
+Example of a \code{SpatialCollections} object that contains a
+\code{SpatialPolygons} object and a \code{SpatialLines} object
 }
 \examples{
 data(SpatialCollEx)

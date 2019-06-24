@@ -4,14 +4,17 @@
 \alias{untwist}
 \title{Remove self-intersections}
 \usage{
-untwist(myPoly, plotting = FALSE, polyName = "unspecified")
+untwist(my_poly, plotting = FALSE, poly_name = "unspecified",
+  min_area = 12.5)
 }
 \arguments{
-\item{myPoly}{\code{SpatialPolygons} object from which self-intersections need to be removed}
+\item{my_poly}{\code{SpatialPolygons} object from which self-intersections need to be removed}
 
 \item{plotting}{boolean indicating if results should be plotted}
 
-\item{polyName}{name for \code{SpatialPolygons} object to return (defaults to "unspecified")}
+\item{poly_name}{name for \code{SpatialPolygons} object to return (defaults to "unspecified")}
+
+\item{min_area}{minimum area for any individual polygon}
 }
 \value{
 \code{SpatialPolygons} object with self-intersections removed
@@ -23,7 +26,7 @@ Function to remove all self-intersections from a contour.
 \dontrun{
 par(mfrow = c(1, 2))
 plot(interEx, main = "Original Contour")
-noInter <- untwist(interEx, polyName = "interEx")
+noInter <- untwist(interEx, poly_name = "interEx")
 plot(noInter, main = "Final Contour")
 }
 }

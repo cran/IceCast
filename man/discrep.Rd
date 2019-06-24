@@ -3,53 +3,50 @@
 \docType{data}
 \name{discrep}
 \alias{discrep}
-\title{Discrepancy maps for February 1981-2011}
+\title{Discrepancy maps for September 1993-2007 (lead time 2.5-months)}
 \format{Object obtained from the \code{createMapping} function (see details)}
 \usage{
 discrep
 }
 \description{
-The object \code{discrep} is obtained from running the \code{createMapping} function
-for the month of February from 1981-2011. The predictions are from the CM2.5
-Forecast-oriented Low-Ocean Resolution (FLOR) model
-produced by the National Oceanic and Atmospheric Administration’s Geophysical Fluid Dynamics
-Laboratory converted to a Polar Stereographic grid at a 3.5-month lead time  (Vecchi et al. 2014; Msadek et al. 2014).
- Weights for converting to a polar stereograhic grid were obtained
- from the spherical coordinate remapping and interpolation package (SCRIP) (Jones 1997).
-The observations are from the monthly sea ice concentration
-obtained from the National Aeronautics and Space Administration (NASA) satellites Nimbus-7
-SMMR and DMSP SSM/I-SSMIS and processed by the bootstrap algorithm. The results
-are distributed by the National Snow and Ice Data Center (Comiso 2000, updated 2015).
+The object \code{discrep} is obtained from running the \code{createMapping}
+function for September 1993-2007. The predictions used are from European Center
+for Medium-Range Weather Forecasts (ECMWF) at a 2.5-month lead time and are
+converted to a Polar Stereographic grid. Model output is available from
+the Sea Ice Prediction Network Predicatability Portal or the Copernicus
+Climate Change Service data store. The observations used are from the monthly
+sea ice concentration obtained fromthe National Aeronautics and Space
+Administration (NASA) satellites Nimbus-7 SMMR and DMSP SSM/I-SSMIS and
+processed by the bootstrap algorithm. The results are distributed by the
+National Snow and Ice Data Center (Comiso 2017).
 }
 \details{
-The object \code{discrep} is obtained from running the \code{createMapping} function. It is a list of five objects where \code{month},
-\code{startYear}, and \code{endYear} give the month, first year, and last year that were mapped. The variables \code{obsList} and \code{predList}
-are lists of arrays with one 3-dimensional array for each region. The first dimension is for the year. The other two dimensions
-are for the fixed points' y-coordinates, the mapped points' x-coordinates, the mapped points' y-coordinates, the length of the mapping vectors in the
-x-direction, the length of the vectors in the y-direction, and the angles of the mapping vectors.
+The object \code{discrep} is obtained from running the
+         \code{createMapping} function. It is a list of four objects where
+         \code{startYear} and \code{endYear} give the
+         first year and last year that were mapped. The variables
+         \code{obsList} and \code{predList} are lists of arrays with one
+         3-dimensional array for each region. The first dimension is for the
+         year. The other two dimensions are for the fixed points'
+         y-coordinates, the mapped points' x-coordinates, the mapped points'
+         y-coordinates, the length of the mapping vectors in the x-direction,
+         the length of the vectors in the y-direction, and the angles of the
+         mapping vectors.
 }
 \examples{
 data(discrep)
 names(discrep)
 }
 \references{
-Bootstrap sea ice concentration:
-Comiso, J., 2000, updated 2015: Bootstrap sea ice concentrations from Nimbus-7 SMMR and
-DMSP SSM/I-SSMIS. version 2. \url{http://nsidc.org/data/nsidc-0079}
+Comiso, J., 2017: Bootstrap sea ice concentrations
+            from Nimbus-7 SMMR and DMSP SSM/I-SSMIS. version 3.
+            Boulder, Colorado USA: NASA National Snow and Ice Data Center
+            Distributed Active Archive Center. doi: \url{https://doi.org/10.5067/7Q8HCCWS4I0R}
 
-CM2.5 Forecast-oriented Low-Ocean Resolution (FLOR) model:
-Vecchi, Gabriel A., et al.
-\href{http://journals.ametsoc.org/doi/abs/10.1175/JCLI-D-14-00158.1}{"On the seasonal forecasting of regional tropical}
-cyclone activity." Journal of Climate 27.21 (2014): 7994-8016.
+            Copernicus Climate Change Service (2019). Description of the c3s
+            seasonal multi-system.\url{https://confluence.ecmwf.int/display/COPSRV/Description+of+the+C3S+seasonal+multi-system}
 
-Msadek, R., et al.
-\href{http://onlinelibrary.wiley.com/doi/10.1002/2014GL060799/full}{"Importance of initial conditions in seasonal predictions of Arctic sea ice extent."}
- Geophysical Research Letters 41.14 (2014): 5208-5215.
-
-National Center for Atmospheric Research, 2017: Earth system grid at NCAR. \url{https://www.
-earthsystemgrid.org/home.html}.
-
-Jones, P.W. "A user’s guide for SCRIP: A spherical coordinate remapping and interpolation package."
-Los Alamos National Laboratory, Los Alamos, NM (1997).
+            Sea Ice Prediction Network (2019). Sea ice prediction network
+            predictability portal. \url{https://atmos.uw.edu/sipn/.}
 }
 \keyword{datasets}
